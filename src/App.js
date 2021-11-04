@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import MessageForm from './components/MessageForm.jsx';
+import MessageDisplay from './components/MessageDisplay';
+    
 function App() {
-  return (
-    <div>
-      <div className="header">
-        <h1>Hello Dojo</h1>
-      </div>
-      <div>
-        <h2>To Do List</h2>
-        <ul>
-          <li>Wake up</li>
-          <li>Brush teeth</li>
-          <li>Buy boba</li>
-          <li>Repeat.</li>
-        </ul>
-      </div>
-    </div>
-  );
+    // Lifting State includes creating it in a common parent that can pass data down to ALL
+    //    components that will need access to the getter, setter or both
+    const [currentMsg, setCurrentMsg] = useState("There are no messages");
+    
+    const youveGotMail = ( newMessage ) => {
+        setCurrentMsg( newMessage );
+    }
+    
+    return (
+        <>
+            // We pass in our function that will take in a string and update our state in our App component
+            <MessageForm onNewMessage={ youveGotMail } />
+            // We pass our state getter from our App component down to MessageDisplay through props
+            //    for displaying its value
+            <MessageDisplay message={ currentMsg } />
+        </>
+    );
 }
-
+    
 export default App;
